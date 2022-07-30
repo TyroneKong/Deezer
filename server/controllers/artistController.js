@@ -9,7 +9,7 @@ exports.getArtist = async (req, res) => {
     url: "https://deezerdevs-deezer.p.rapidapi.com/search",
     params: { q: req.params.name },
     headers: {
-      "X-RapidAPI-Key": "2130c8f6c7msh1f292e2b2420a0ep1b215fjsn556d765ad938",
+      "X-RapidAPI-Key": process.env.APIKEY,
       "X-RapidAPI-Host": "deezerdevs-deezer.p.rapidapi.com",
     },
   };
