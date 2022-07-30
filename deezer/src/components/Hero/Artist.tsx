@@ -5,7 +5,6 @@ import ArtistTable from "./ArtistTable";
 
 const Artist = () => {
   const artist: any = useSelector<RootState>((state) => state.artist.artist);
-  console.log(artist);
 
   const artistImage = artist[0]?.artist.picture_big;
 

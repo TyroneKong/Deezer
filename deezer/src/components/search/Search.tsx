@@ -1,51 +1,54 @@
-import React, { useState } from "react";
+import React, { FC, useState, useRef } from "react";
 import axios from "axios";
 import { Button, FormControl, TextField, Input } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setArtist } from "../redux/slices/artistSlice";
 import { RootState } from "../redux/store/artistStore";
 
-const Search = () => {
+const Search: FC = () => {
   const [input, setInput] = useState("");
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   const dispatch = useDispatch();
   const artistState: any = useSelector<RootState>(
     (state) => state.artist.artist
   );
 
-  const getArtist = async () => {
+  const getArtist = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     try {
       const { data } = await axios.get(`http://localhost:8002/artist/${input}`);
 
-      const allData = data.data.filter(
+      const allData = data?.data.filter(
         (data: any) => data.artist.name.toLowerCase() === input
       );
 
       dispatch(setArtist(allData));
+      formRef.current?.reset();
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(input);
-
   return (
     <div>
-      <FormControl>
-        <TextField
+      <form ref={formRef} onSubmit={(e) => getArtist(e)}>
+        <input
           className="rounded"
-          onChange={(e) => setInput(e.currentTarget.value.toLocaleLowerCase())}
+          onChange={(e) => setInput(e.currentTarget.value.toLowerCase())}
           placeholder="enter your favourite artist..."
-        ></TextField>
+        ></input>
 
-        <Button onClick={getArtist} variant="contained">
+        <Button type="submit" variant="contained">
           Submit
         </Button>
         <div className="mb-10"></div>
         <h2 className="text-3xl">
           {artistState.length > 0 && artistState[0].artist.name}
         </h2>
-      </FormControl>
+      </form>
     </div>
   );
 };
