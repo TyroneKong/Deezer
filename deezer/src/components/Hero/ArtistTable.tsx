@@ -9,7 +9,7 @@ const ArtistTable = () => {
 
   return (
     <div className="mt-10">
-      {artistData.length > 0 && (
+      {artistData.length > 0 ? (
         <table>
           <tbody>
             <tr>
@@ -37,6 +37,8 @@ const ArtistTable = () => {
             })}
           </tbody>
         </table>
+      ) : (
+        <h1>No results available</h1>
       )}
     </div>
   );

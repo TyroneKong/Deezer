@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef } from "react";
 import axios from "axios";
-import { Button, FormControl, TextField, Input } from "@mui/material";
+import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setArtist } from "../redux/slices/artistSlice";
 import { RootState } from "../redux/store/artistStore";
@@ -32,12 +32,16 @@ const Search: FC = () => {
     }
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(e.currentTarget.value);
+  };
+
   return (
     <div>
       <form ref={formRef} onSubmit={(e) => getArtist(e)}>
         <input
           className="rounded"
-          onChange={(e) => setInput(e.currentTarget.value.toLowerCase())}
+          onChange={(e) => handleChange(e)}
           placeholder="enter your favourite artist..."
         ></input>
 
